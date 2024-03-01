@@ -12,7 +12,7 @@ const createFileTree = (paths, baseUrl = '') => {
                 nextNode = Object.assign({}, {
                     key: uniqueId('menu-'), label: segment, children: []
                 }, index === segments.length - 1 ? {
-                    key: item.id, path: `${baseUrl}?id=${item.id}`, label: segment.replace(/\..*$/, '').split('-')[0]
+                    key: item.id, path: `${baseUrl}?id=${item.id}`, label: item.title || segment
                 } : {
                     iconType: 'icon-wenjianjia'
                 });
