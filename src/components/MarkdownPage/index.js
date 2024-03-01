@@ -46,7 +46,7 @@ const MarkdownPageInner = createWithRemoteLoader({
     const [title, author] = last(item.path.split('/')).replace(/\..*$/, '').split('-');
 
     return <Page {...props} name={name} title={title} titleExtra={author ? `作者:${author}` : null}
-                 menu={<Menu items={menuItems} allowCollapsed={false}/>}>
+                 menu={<Menu currentKey={id} items={menuItems} allowCollapsed={false}/>}>
         <Fetch url={(url || `/${name}`) + item.path} transformResponse={transformResponse} render={({data}) => {
             return <MarkdownRender content={data} assetsPath={assetsPath}/>;
         }}/>
