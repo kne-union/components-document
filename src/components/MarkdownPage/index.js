@@ -3,7 +3,7 @@ import {createWithRemoteLoader} from '@kne/remote-loader';
 import MarkdownRender from '@components/MarkdownRender';
 import {useSearchParams, Navigate} from 'react-router-dom';
 import Fetch from '@kne/react-fetch';
-import {Empty} from "antd";
+import {Empty, Space} from "antd";
 import createFileTree from './createFileTree';
 import last from 'lodash/last';
 
@@ -43,10 +43,14 @@ const MarkdownPageInner = createWithRemoteLoader({
 
     const item = contentMap.get(id);
 
-    const [title, author] = last(item.path.split('/')).replace(/\..*$/, '').split('-');
+    const title = last(item.path.split('/'));
 
-    return <Page {...props} name={name} title={title} titleExtra={author ? `作者:${author}` : null}
-                 menu={<Menu items={menuItems} allowCollapsed={false}/>}>
+    return <Page {...props} name={name} title={item.title || title}
+                 titleExtra={<Space>
+                     <span>{item.author ? `作者:${item.author}` : null}</span>
+                     <span>{item.time ? `发布日期:${item.time}` : null}</span>
+                 </Space>}
+                 menu={<Menu currentKey={id} items={menuItems} allowCollapsed={false}/>}>
         <Fetch url={(url || `/${name}`) + item.path} transformResponse={transformResponse} render={({data}) => {
             return <MarkdownRender content={data} assetsPath={assetsPath}/>;
         }}/>
