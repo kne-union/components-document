@@ -1,5 +1,4 @@
 由于cra限制，模板不能拿到project-name，初始化完成后需要再手动进行一些修改，后期会替换掉cra
-
 1. package.json
 
    删除
