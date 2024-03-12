@@ -17,7 +17,7 @@ const transformResponse = (response) => {
 
 const MarkdownPageInner = createWithRemoteLoader({
     modules: ["components-core:Layout@Page", "components-core:Menu"]
-})(({remoteModules, baseUrl, url, name, data, assetsPath, ...props}) => {
+})(({remoteModules, baseUrl, url, name, data, assetsPath, contentClassName, ...props}) => {
     const [Page, Menu] = remoteModules;
     const contentMap = useMemo(() => {
         return new Map(data.map((item) => {
@@ -52,7 +52,7 @@ const MarkdownPageInner = createWithRemoteLoader({
                  </Space>}
                  menu={<Menu currentKey={id} items={menuItems} allowCollapsed={false}/>}>
         <Fetch url={(url || `/${name}`) + item.path} transformResponse={transformResponse} render={({data}) => {
-            return <MarkdownRender content={data} assetsPath={assetsPath}/>;
+            return <MarkdownRender className={contentClassName} content={data} assetsPath={assetsPath}/>;
         }}/>
     </Page>
 });
