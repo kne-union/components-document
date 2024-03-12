@@ -39,7 +39,7 @@ const createMD = (options) => {
     return md;
 };
 
-const MarkdownRender = ({content, assetsPath}) => {
+const MarkdownRender = ({className, content, assetsPath}) => {
     const ref = useRef();
     const md = useMemo(() => {
         return createMD({assetsPath});
@@ -48,7 +48,7 @@ const MarkdownRender = ({content, assetsPath}) => {
         mermaid.initialize({});
         mermaid.contentLoaded();
     }, [content]);
-    return <div ref={ref} className={classnames('mark-down-html', style['mark-down-html'])}
+    return <div ref={ref} className={classnames('mark-down-html', style['mark-down-html'], className)}
                 dangerouslySetInnerHTML={{__html: md.render(typeof content !== 'string' ? '' : content)}}/>;
 };
 
