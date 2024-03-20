@@ -5,7 +5,7 @@ on:
     types:
       - closed
 jobs:
-  libs-npm:
+  remote-npm:
     if: github.event.pull_request.merged == true
     uses: kne-union/actions/.github/workflows/publish-remote-components-workflow.yml@master
     secrets: inherit
