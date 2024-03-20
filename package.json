@@ -17,14 +17,13 @@
     "build"
   ],
   "scripts": {
+    "init": "husky",
     "start": "cross-env PORT=3001 MODULES_DEV_PUBLIC_URL=/ craco start",
     "build": "cross-env COMPONENTS_NAME=components-document MODULES_DEV_PUBLIC_URL=/components-document  craco build",
     "test": "craco test --coverage",
     "eject": "react-scripts eject",
-    "init": "npm i --legacy-peer-deps",
     "create": "modules-dev-create",
-    "lint-staged": "lint-staged",
-    "prepare": "husky install"
+    "lint-staged": "lint-staged"
   },
   "eslintConfig": {
     "extends": [
