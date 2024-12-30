@@ -17,13 +17,13 @@ const transformResponse = (response) => {
 
 const MarkdownPageInner = createWithRemoteLoader({
     modules: ["components-core:Layout@Page", "components-core:Menu"]
-})(({remoteModules, baseUrl, url, name, data, assetsPath, contentClassName, ...props}) => {
+})(({remoteModules, baseUrl, url, name, data, assetsPath, contentClassName,transformData, ...props}) => {
     const [Page, Menu] = remoteModules;
     const contentMap = useMemo(() => {
-        return new Map(data.map((item) => {
+        return new Map((typeof transformData === 'function' ? transformData(data) : data).map((item) => {
             return [item.id, item];
         }));
-    }, [data]);
+    }, [data,transformData]);
 
     const menuItems = useMemo(() => {
         return createFileTree(data, baseUrl);
