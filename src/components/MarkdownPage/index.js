@@ -17,17 +17,17 @@ const transformResponse = (response) => {
 
 const MarkdownPageInner = createWithRemoteLoader({
     modules: ["components-core:Layout@Page", "components-core:Menu"]
-})(({remoteModules, baseUrl, url, name, data, assetsPath, contentClassName,transformData, ...props}) => {
+})(({remoteModules, baseUrl, url, name, data, assetsPath, contentClassName, transformMenuData, ...props}) => {
     const [Page, Menu] = remoteModules;
     const contentMap = useMemo(() => {
-        return new Map((typeof transformData === 'function' ? transformData(data) : data).map((item) => {
+        return new Map(data.map((item) => {
             return [item.id, item];
         }));
-    }, [data,transformData]);
+    }, [data]);
 
     const menuItems = useMemo(() => {
-        return createFileTree(data, baseUrl);
-    }, [data, baseUrl]);
+        return createFileTree(typeof transformMenuData === 'function' ? transformMenuData(data) : data, baseUrl);
+    }, [data, baseUrl, transformMenuData]);
 
     if (!(data && data.length > 0)) {
         return <Empty description={'暂时没有内容发布'}/>;
@@ -61,8 +61,9 @@ MarkdownPageInner.defaultProps = {
     baseUrl: '', assetsPath: '/assets'
 };
 
-const MarkdownPage = ({name, url, ...props}) => {
-    return <Fetch url={(url || `/${name}`) + '/manifest.json'} transformResponse={transformResponse}
+const MarkdownPage = ({name, url, transformResponse: transformResponseProps, params, ...props}) => {
+    return <Fetch url={(url || `/${name}`) + '/manifest.json'} params={params}
+                  transformResponse={transformResponseProps || transformResponse}
                   render={({data}) => {
                       return <MarkdownPageInner {...props} url={url} name={name} data={data}/>
                   }}/>
